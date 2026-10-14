@@ -1,0 +1,315 @@
+/* =========================================================
+   URBANPLATE - dark theme (loads AFTER style.css)
+   Black background, orange buttons, faded photo backgrounds
+   ========================================================= */
+
+/* ---------- 1. Colors, fonts, shapes ---------- */
+:root {
+  --paper: #0B1013;
+  --paper-2: #11181D;
+  --white: #141C21;
+  --forest: #070B0D;
+  --forest-2: #0D1317;
+  --forest-3: #182127;
+  --tomato: #D98340;
+  --tomato-hover: #E8964F;
+  --saffron: #E8A15A;
+  --ink: #F2EFEA;
+  --muted: #9AA3A8;
+  --line: #222C32;
+  --line-strong: #33414A;
+
+  --serif: 'Josefin Sans', 'Segoe UI', sans-serif;
+  --sans: 'Josefin Sans', 'Segoe UI', sans-serif;
+  --script: 'Sacramento', cursive;
+
+  --radius: 4px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .55);
+}
+
+/* ---------- 2. Headings ---------- */
+h1, h2, h3 {
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-weight: 400;
+}
+h1 { font-weight: 700; letter-spacing: .1em; }
+
+.section-head {
+  text-align: center;
+  margin-inline: auto;
+  max-width: 760px;
+}
+.section-head h2 {
+  letter-spacing: .2em;
+  font-size: clamp(1.7rem, 4vw, 2.7rem);
+}
+.section-head.split {
+  text-align: left;
+  max-width: none;
+  margin-inline: 0;
+}
+
+/* Handwritten line above the main heading */
+.script {
+  font-family: var(--script);
+  font-size: 1.9rem;
+  text-transform: none;
+  letter-spacing: 0;
+  margin: 0 0 .4rem;
+  color: var(--ink);
+}
+
+/* ---------- 3. Header and navigation ---------- */
+.site-header {
+  background: rgba(7, 11, 13, .94);
+  border-bottom: 1px solid var(--line);
+}
+.brand span { text-transform: uppercase; letter-spacing: .18em; }
+
+.nav a {
+  color: var(--ink);
+  background: transparent;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: .8rem;
+}
+.nav a:hover,
+.nav a[aria-current="true"] {
+  color: var(--tomato);
+  background: transparent;
+}
+
+/* ---------- 4. Buttons ---------- */
+.btn {
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .78rem;
+  border-radius: 2px;
+}
+.btn-primary,
+.btn-dark {
+  background: var(--tomato) !important;
+  color: #fff !important;
+  border-color: var(--tomato) !important;
+}
+.btn-primary:hover,
+.btn-dark:hover {
+  background: var(--tomato-hover) !important;
+  border-color: var(--tomato-hover) !important;
+}
+.btn-ghost {
+  background: transparent !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--line-strong) !important;
+}
+.btn-ghost:hover {
+  border-color: var(--tomato) !important;
+  color: var(--tomato) !important;
+}
+
+/* ---------- 5. Hero (photo: img/hero.jpg) ---------- */
+.hero {
+  background-image:
+    linear-gradient(rgba(7, 11, 13, .45), rgba(11, 16, 19, .92)),
+    url('../img/hero.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  text-align: center;
+}
+.hero-grid { grid-template-columns: 1fr; justify-items: center; }
+.hero-visual { display: none; }
+.hero-search { margin-inline: auto; }
+.hero-points { justify-content: center; }
+.lead { margin-inline: auto; max-width: 56ch; }
+
+/* ---------- 6. Section backgrounds ---------- */
+.featured,
+.list { background: var(--paper); }
+
+/* "Start with a country": plain dark, no photo */
+#boroughs,
+.section.dark {
+  background: var(--paper-2) !important;
+  background-image: none !important;
+}
+#boroughs h2 { color: var(--ink) !important; }
+#boroughs .section-head p { color: var(--muted) !important; }
+
+/* About (photo: img/about.jpg) */
+.about {
+  background:
+    linear-gradient(rgba(11, 16, 19, .86), rgba(11, 16, 19, .93)),
+    url('../img/about.jpg') center / cover no-repeat;
+}
+
+/* Best quality (photo: img/best.jpg) */
+.best {
+  background-image:
+    linear-gradient(rgba(11, 16, 19, .6), rgba(11, 16, 19, .88)),
+    url('../img/best.jpg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+/* ---------- 7. Cards, tiles, tags ---------- */
+.spot,
+.tile,
+.board li,
+.table-wrap {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.spot:hover,
+.tile:hover { border-color: var(--tomato); }
+
+.tag {
+  background: rgba(255, 255, 255, .08);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+}
+
+/* Restaurant photos on the cards (photos: img/food/) */
+.spot-photo {
+  padding: 0 !important;
+  overflow: hidden;
+  display: block !important;
+  aspect-ratio: auto !important;
+  height: auto !important;
+}
+.spot-photo .spot-img {
+  display: block !important;
+  width: 100% !important;
+  height: 260px !important;
+  object-fit: cover !important;
+  filter: brightness(.88) saturate(1.05);
+  transition: transform .4s ease, filter .4s ease;
+}
+.spot:hover .spot-img { transform: scale(1.05); filter: brightness(1) saturate(1.1); }
+
+/* Country tiles: 3 per row, 2 on phones */
+.tiles { grid-template-columns: repeat(3, 1fr); }
+.tile svg { opacity: .25; }
+.tile-name,
+.tile-count { color: var(--ink) !important; }
+@media (max-width: 720px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---------- 8. Filters, table, pager ---------- */
+.chip {
+  background: var(--paper-2) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--line-strong) !important;
+}
+.chip:hover { border-color: var(--tomato) !important; }
+.chip[aria-pressed="true"] {
+  background: var(--tomato) !important;
+  color: #fff !important;
+  border-color: var(--tomato) !important;
+}
+
+.table thead th {
+  background: var(--paper-2) !important;
+  color: var(--ink) !important;
+  border-bottom: 1px solid var(--line-strong) !important;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .75rem;
+}
+.table td {
+  color: var(--ink) !important;
+  border-color: var(--line);
+}
+.table .t-name { color: #fff !important; }
+/* Dark alternating restaurant rows keep light text readable on every row. */
+.table tbody tr { background: #141C21; }
+.table tbody tr:nth-child(even) { background: #1D282E; }
+.table tbody tr:hover { background: #2B3A42; }
+
+.pager button {
+  background: var(--paper-2) !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--line-strong) !important;
+}
+.pager button[aria-current="page"] {
+  background: var(--tomato) !important;
+  color: #fff !important;
+  border-color: var(--tomato) !important;
+}
+.pager button:disabled { opacity: .4; }
+
+/* ---------- 9. Forms and popups ---------- */
+input,
+select,
+textarea {
+  background: var(--paper-2);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+input::placeholder { color: var(--muted); }
+
+dialog {
+  background: var(--paper-2);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+}
+dialog::backdrop { background: rgba(0, 0, 0, .7); }
+
+/* ---------- 10. About photo collage (img/about-1,2,3.jpg) ---------- */
+.collage .c-a,
+.collage .c-b,
+.collage .c-c {
+  position: relative !important;
+  display: block !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  background: var(--forest) !important;
+}
+.collage .c-a img,
+.collage .c-b img,
+.collage .c-c img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  object-fit: cover !important;
+  filter: brightness(.88) saturate(1.05);
+  transition: transform .4s ease, filter .4s ease;
+}
+.collage > div:hover img { transform: scale(1.05); filter: brightness(1); }
+
+/* Map and gauge: show the whole picture (zoomed out) */
+.collage .c-b img,
+.collage .c-c img {
+  object-fit: contain !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+  filter: none !important;
+}
+.collage .c-b { background: #E8EEF2 !important; }
+.collage .c-c { background: #E9E9E9 !important; }
+.collage .c-b:hover img,
+.collage .c-c:hover img { transform: none !important; }
+
+/* ---------- 11. Footer ---------- */
+.site-footer {
+  background: var(--forest);
+  border-top: 1px solid var(--line);
+}
+.site-footer,
+.site-footer p,
+.site-footer li,
+.site-footer a { color: var(--muted) !important; }
+.site-footer .brand,
+.site-footer .brand span,
+.site-footer h3 { color: var(--ink) !important; }
+.site-footer h3 { letter-spacing: .2em; font-size: .85rem; }
+.site-footer a:hover { color: var(--tomato) !important; }
+.site-footer .foot-bar { border-top: 1px solid var(--line); }

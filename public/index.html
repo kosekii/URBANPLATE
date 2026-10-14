@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>URBANPLATE | Filipino favorites around the world</title>
+  <meta name="description" content="URBANPLATE is a hub for popular Philippine restaurants and fast food chains around the world. Search by name or cuisine, filter by country and see the best quality spots.">
+  <meta name="theme-color" content="#0B1013">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Sacramento&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dark-theme.css">
+</head>
+<body>
+  <a class="skip-link" href="#list">Skip to the restaurant list</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="container bar">
+      <a class="brand" href="#home" aria-label="URBANPLATE home">
+        <svg class="brand-mark" viewBox="0 0 34 34" aria-hidden="true">
+          <circle cx="17" cy="17" r="17" fill="#D98340"/>
+          <circle cx="17" cy="17" r="11" fill="#fff"/>
+          <circle cx="17" cy="17" r="5" fill="#F2A93B"/>
+        </svg>
+        <span>URBANPLATE</span>
+      </a>
+
+      <nav id="nav" class="nav" aria-label="Main">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#list">List</a>
+        <a href="#best">Best quality</a>
+      </nav>
+
+      <div class="bar-actions">
+        <button type="button" class="btn btn-primary btn-sm" data-open-add>Add a spot</button>
+        <button type="button" class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ HOME ============ -->
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="script">welcome to our delicious corner</p>
+          <h1>Find your next <em>table</em> anywhere in the world.</h1>
+          <p class="lead">Search popular Philippine restaurants and fast food chains by name or cuisine, narrow them down by country, and see which ones score best.</p>
+
+          <form id="heroSearch" class="hero-search" role="search">
+            <label class="sr-only" for="heroField">Search by</label>
+            <select id="heroField" aria-label="Search by">
+              <option value="name">Name</option>
+              <option value="cuisine">Cuisine</option>
+            </select>
+            <label class="sr-only" for="heroQ">Search restaurants</label>
+            <div class="suggest-wrap hero-suggest-wrap">
+              <input id="heroQ" type="search" placeholder="Try Bakery, Pizza or Jollibee" autocomplete="off" aria-autocomplete="list" aria-controls="heroSuggestions" aria-expanded="false">
+              <div id="heroSuggestions" class="suggest-list" role="listbox" aria-label="Restaurant suggestions" hidden></div>
+            </div>
+            <button class="btn btn-primary" type="submit">Search</button>
+          </form>
+
+          <ul class="hero-points">
+            <li>Search by name or cuisine</li>
+            <li>Filter by country</li>
+            <li>Ranked by inspection score</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="featured" class="section featured">
+      <div class="container">
+        <div class="section-head">
+          <h2>Spots to try today</h2>
+          <p>Four picks from the database. Reload for a new set.</p>
+        </div>
+        <div id="featuredGrid" class="spots" aria-live="polite">
+          <p class="muted">Loading restaurants...</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="boroughs" class="section dark">
+      <div class="container">
+        <div class="section-head">
+          <h2>Start with a country</h2>
+          <p>Pick one and the list below filters to it.</p>
+        </div>
+        <div id="boroughTiles" class="tiles"></div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="section about">
+      <div class="container about-grid">
+        <div class="collage" aria-hidden="true">
+          <div class="c-a"><img src="img/about-1.jpg" alt=""></div>
+          <div class="c-b"><img src="img/about-2.jpg" alt=""></div>
+          <div class="c-c"><img src="img/about-3.jpg" alt=""></div>
+        </div>
+        <div class="about-copy">
+          <h2>Built for people who always ask where to eat</h2>
+          <p>URBANPLATE gathers the restaurants stored in the <strong>dbRestaurants</strong> database into one place. Look a restaurant up by name or cuisine, group the list by country, and check which places have the strongest inspection scores.</p>
+          <p>Anyone can keep the list current. Add a new spot, edit the details of an existing one, or delete one that has closed. Every change is saved to MongoDB Atlas.</p>
+          <dl class="stats">
+            <div><dt>Restaurants</dt><dd id="statTotal">-</dd></div>
+            <div><dt>Cuisines</dt><dd id="statCuisines">-</dd></div>
+            <div><dt>Countries</dt><dd>6</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LIST ============ -->
+    <section id="list" class="section list">
+      <div class="container">
+        <div class="section-head split">
+          <div>
+            <h2>List of restaurants</h2>
+            <p id="summary" class="muted" aria-live="polite">Loading...</p>
+          </div>
+          <button type="button" class="btn btn-primary" data-open-add>Add a spot</button>
+        </div>
+
+        <form id="searchForm" class="toolbar" role="search">
+          <label class="sr-only" for="field">Search by</label>
+          <select id="field" aria-label="Search by">
+            <option value="name">Search by name</option>
+            <option value="cuisine">Search by cuisine</option>
+          </select>
+          <label class="sr-only" for="q">Keyword</label>
+          <div class="suggest-wrap list-suggest-wrap">
+            <input id="q" type="search" placeholder="Enter a keyword" autocomplete="off" aria-autocomplete="list" aria-controls="searchSuggestions" aria-expanded="false">
+            <div id="searchSuggestions" class="suggest-list" role="listbox" aria-label="Search suggestions" hidden></div>
+          </div>
+          <button class="btn btn-dark" type="submit">Search</button>
+          <button class="btn btn-ghost" type="button" id="clearBtn">Clear</button>
+        </form>
+
+        <div id="chips" class="chips" role="group" aria-label="Filter by country"></div>
+
+        <div class="table-wrap">
+          <table class="table" id="table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Country</th>
+                <th scope="col">Cuisine</th>
+                <th scope="col">Address</th>
+                <th scope="col">Latest grade</th>
+                <th scope="col"><span class="sr-only">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+        <nav id="pager" class="pager" aria-label="Pagination"></nav>
+      </div>
+    </section>
+
+    <!-- ============ BEST QUALITY ============ -->
+    <section id="best" class="section best">
+      <div class="container best-grid">
+        <div class="best-copy">
+          <h2>Best quality restaurants</h2>
+          <p>These restaurants have an aggregated inspection score greater than <strong id="bestMin">90</strong>. The highest total comes first.</p>
+        </div>
+        <ol id="bestList" class="board" aria-live="polite">
+          <li class="muted">Loading...</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="container foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#home" aria-label="URBANPLATE home">
+          <svg class="brand-mark" viewBox="0 0 34 34" aria-hidden="true">
+            <circle cx="17" cy="17" r="17" fill="#D98340"/><circle cx="17" cy="17" r="11" fill="#fff"/><circle cx="17" cy="17" r="5" fill="#F2A93B"/>
+          </svg>
+          <span>URBANPLATE</span>
+        </a>
+        <p>A hub for the restaurants in dbRestaurants. Search, filter, rate and manage them across six countries.</p>
+      </div>
+      <div>
+        <h3>Pages</h3>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#list">List of restaurants</a></li>
+          <li><a href="#best">Best quality</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Countries</h3>
+        <ul id="footBoroughs"></ul>
+      </div>
+      <div>
+        <h3>Built with</h3>
+        <ul>
+          <li>HTML, CSS and JavaScript</li>
+          <li>Node.js and Express</li>
+          <li>MongoDB Atlas</li>
+        </ul>
+      </div>
+    </div>
+    <div class="container foot-bar">
+      <p>&copy; <span id="year">2026</span> URBANPLATE. Made for a class project.</p>
+    </div>
+  </footer>
+
+  <!-- ============ ADD / EDIT DIALOG ============ -->
+  <dialog id="formDialog" aria-labelledby="formTitle">
+    <form id="restaurantForm" method="dialog" novalidate>
+      <div class="dialog-head">
+        <h2 id="formTitle">Add a spot</h2>
+        <button type="button" class="icon-btn" data-close aria-label="Close">&times;</button>
+      </div>
+      <p id="formHint" class="muted">Fill in the details. This saves straight to the dbRestaurants collection.</p>
+      <input type="hidden" id="fId">
+
+      <label class="field">
+        <span>Restaurant name</span>
+        <input id="fName" name="name" type="text" required maxlength="120" placeholder="e.g. Jollibee">
+      </label>
+
+      <div class="grid-2">
+        <label class="field">
+          <span>Country</span>
+          <select id="fBorough" name="borough" required>
+            <option value="">Choose a country</option>
+            <option>Philippines</option><option>USA</option><option>Canada</option><option>UAE</option><option>UK</option><option>Singapore</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Cuisine</span>
+          <input id="fCuisine" name="cuisine" type="text" required maxlength="80" list="cuisineList" placeholder="e.g. Bakery">
+          <datalist id="cuisineList">
+            <option>American</option><option>Fast Food</option><option>Filipino</option><option>Bakery</option><option>Café/Coffee/Tea</option><option>Caribbean</option>
+            <option>Chinese</option><option>Delicatessen</option><option>French</option><option>Hamburgers</option>
+            <option>Indian</option><option>Italian</option><option>Japanese</option><option>Korean</option>
+            <option>Mediterranean</option><option>Mexican</option><option>Pizza</option><option>Seafood</option>
+            <option>Vegetarian</option>
+          </datalist>
+        </label>
+      </div>
+
+      <div class="grid-3">
+        <label class="field">
+          <span>Building</span>
+          <input id="fBuilding" name="building" type="text" maxlength="20" placeholder="SM Mall of Asia">
+        </label>
+        <label class="field span-2">
+          <span>Street</span>
+          <input id="fStreet" name="street" type="text" maxlength="80" placeholder="Seaside Boulevard">
+        </label>
+      </div>
+
+      <div class="grid-3">
+        <label class="field">
+          <span>Zipcode</span>
+          <input id="fZip" name="zipcode" type="text" maxlength="10" placeholder="1300">
+        </label>
+        <label class="field">
+          <span>Grade</span>
+          <select id="fGrade" name="grade">
+            <option value="">No grade</option><option>A</option><option>B</option><option>C</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Score</span>
+          <input id="fScore" name="score" type="number" min="0" max="200" placeholder="0 to 200">
+        </label>
+      </div>
+
+      <p id="formError" class="form-error" role="alert" hidden></p>
+
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+        <button type="submit" class="btn btn-primary" id="formSubmit">Save spot</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ============ DELETE DIALOG ============ -->
+  <dialog id="confirmDialog" aria-labelledby="confirmTitle">
+    <div class="dialog-head">
+      <h2 id="confirmTitle">Delete this restaurant?</h2>
+      <button type="button" class="icon-btn" data-close aria-label="Close">&times;</button>
+    </div>
+    <p id="confirmText">This removes the restaurant from the database. You can't undo this.</p>
+    <div class="dialog-actions">
+      <button type="button" class="btn btn-ghost" data-close>Keep it</button>
+      <button type="button" class="btn btn-danger" id="confirmDelete">Delete restaurant</button>
+    </div>
+  </dialog>
+
+  <div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
